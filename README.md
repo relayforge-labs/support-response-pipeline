@@ -1,3 +1,3 @@
 # support-response-pipeline
 
-Small OpenAI-compatible gateway integration for internal operations tasks.
+Set `OPENAI_BASE_URL`, `OPENAI_API_KEY`, and `OPENAI_MODEL` in the runtime environment, then run `python3 app.py`.

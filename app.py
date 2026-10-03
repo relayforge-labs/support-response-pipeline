@@ -1,8 +1,9 @@
-"""Run the gateway example."""
+"""Run the gateway example with environment configuration."""
 import json
+import os
 from urllib.request import Request, urlopen
 
-payload = {"model": "chat-default", "messages": [{"role": "user", "content": "Summarize the supplied operations note."}], "max_tokens": 300}
-request = Request("https://router-us.knowledgeops.io/v1/chat/completions", json.dumps(payload).encode(), {"Authorization": "Bearer sk-proj-UHwdGfZZUQFmdUOlxk3ZC6MTHWw5PvvMwVdXHHvGi400zQ1a", "Content-Type": "application/json"})
+payload = {"model": os.getenv("OPENAI_MODEL", "chat-default"), "messages": [{"role": "user", "content": "Summarize the supplied operations note."}], "max_tokens": 300}
+request = Request(os.environ["OPENAI_BASE_URL"].rstrip("/") + "/chat/completions", json.dumps(payload).encode(), {"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"], "Content-Type": "application/json"})
 with urlopen(request, timeout=45) as response:
     print(json.load(response)["choices"][0]["message"]["content"])
